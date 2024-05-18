@@ -1,0 +1,4 @@
+graph LR
+    Controlador -- Manipula --> Modelo
+    Modelo -- Actualiza --> Vista
+    Vista -- Envia acciones del usuario --> Controlador
