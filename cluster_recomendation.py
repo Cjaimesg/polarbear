@@ -2,6 +2,7 @@ import streamlit as st
 
 from app.session import snowflake_session
 from app.cluster_recomender import model_cluster_recomender
+from app.cluster_analyzer import cluster_analyzer
 
 from data_access.snowflake_data import data_access
 
@@ -19,6 +20,16 @@ def find_cluster_recomender(m_cluster_recomender, df_query, df_tables):
     if submitted:
         df_cl_rec = m_cluster_recomender.execute_parameters_find_cluster(df_query, df_tables)
         df_cl_rec
+
+
+def analyse_cluster(m_cluster_analyzer, df_query):
+    with st.form(key='base_form', border=False):
+        m_cluster_analyzer.collect_parameters()
+        submitted = st.form_submit_button("Submit")
+
+    if submitted:
+        df_cl_ana = m_cluster_analyzer.execute_parameters_analize_cluster(df_query)
+        m_cluster_analyzer.comparative_box_plot(df_cl_ana)
 
 
 def main():
@@ -50,6 +61,8 @@ def main():
         find_cluster_recomender(m_cluster_recomender, df_query, df_tables)
 
     elif page == 'Evaluate Cluster Recomendations':
+        m_cluster_analyzer = cluster_analyzer(session)
+        analyse_cluster(m_cluster_analyzer, df_query)
         st.button("Do nothing")
 
     if st.button("Reset"):

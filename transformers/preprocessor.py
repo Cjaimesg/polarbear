@@ -37,7 +37,8 @@ class preprocessor(base.BaseTransformer):
                                   'QUERY_TAG',
                                   'QUERY_ID',
                                   'EXECUTION_TIME',
-                                  'QUERY_PARAMETERIZED_HASH'])
+                                  'QUERY_PARAMETERIZED_HASH',
+                                  'START_TIME'])
 
         return dataset
 
