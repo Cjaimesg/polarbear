@@ -20,7 +20,7 @@ class model_cluster_recomender():
         self.session = session
 
     def collect_parameters_find_cluster(self):
-        st.header("Sección de Recolección de Parámetros")
+        st.header("Parameter Collection Section")
 
         n_queries = 10
         duration = 10
@@ -102,7 +102,8 @@ class model_cluster_recomender():
             'WAREHOUSE_NAME',
             'TOTAL_EXECUTION_TIME_MIN',
             'COUNT',
-            'CLUSTER_RECOMENDATION'])
+            'CLUSTER_RECOMENDATION',
+            'TYPE'])
         df_cl_rec = df_cl_rec.to_pandas()
 
         return df_cl_rec

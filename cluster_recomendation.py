@@ -29,7 +29,10 @@ def analyse_cluster(m_cluster_analyzer, df_query):
 
     if submitted:
         df_cl_ana = m_cluster_analyzer.execute_parameters_analize_cluster(df_query)
+        st.header("Descriptive Analysis of Execution Time Before and After Optimization")
         m_cluster_analyzer.comparative_box_plot(df_cl_ana)
+        m_cluster_analyzer.execution_time_history(df_cl_ana)
+        m_cluster_analyzer.parametic_test(df_cl_ana)
 
 
 def main():
@@ -63,7 +66,6 @@ def main():
     elif page == 'Evaluate Cluster Recomendations':
         m_cluster_analyzer = cluster_analyzer(session)
         analyse_cluster(m_cluster_analyzer, df_query)
-        st.button("Do nothing")
 
     if st.button("Reset"):
         st.session_state.params_collected = False

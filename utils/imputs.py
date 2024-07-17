@@ -43,14 +43,14 @@ def select_date_range():
     today = datetime.now() + timedelta(days=1)
 
     # Calculate the default start date (10 days before tomorrow)
-    start_time = today - timedelta(days=10)
+    start_time = today - timedelta(days=14)
 
     # Calculate the minimum allowed date (14 days before tomorrow)
     limit_date = today - timedelta(days=14)
 
     # Prompt the user to select a date range, with constraints and default values
     date_range = st.date_input(
-        "Select your period",
+        "Select your analysis period",
         (start_time, today),
         start_time,
         today,
@@ -119,7 +119,7 @@ def select_duration_queries():
     # Prompt the user to select the minimum duration of the queries to analyze using a slider widget
     duration = st.slider(
         "What is the minimum duration of the queries you want to analyze?",
-        min_value=0,
+        min_value=1,
         max_value=100,
         value=5
     )

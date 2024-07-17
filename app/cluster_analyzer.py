@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import scipy.stats as stats
 
 from pipeline.PipelineV2 import PipelineV2
 from utils.imputs import select_date
@@ -17,7 +18,7 @@ class cluster_analyzer():
         self.session = session
 
     def collect_parameters(self):
-        st.header("Sección de Recolección de Parámetros")
+        st.header("Parameter Collection Section")
 
         date_range = select_date_range()
         date_split = select_date()
@@ -72,3 +73,43 @@ class cluster_analyzer():
         fig.update_layout(showlegend=False)
 
         st.plotly_chart(fig)
+
+    def execution_time_history(self, df_cl_ana: pd.DataFrame):
+        # Create the line plot
+
+        fig = px.line(df_cl_ana, x="START_TIME", y="EXECUTION_TIME",
+                      title='Evolution of query execution time before and after optimization', 
+                      labels={'START_TIME': 'Date of Execution', 'EXECUTION_TIME': 'Execution Time (s)'})
+
+        fig.update_layout(showlegend=False)
+
+        st.plotly_chart(fig)
+
+    def parametic_test(self, df_cl_ana: pd.DataFrame):
+        # Split the data into two groups: Before and After
+
+        st.header('Statistical Analysis of Execution Time Before and After Optimization')
+        before = df_cl_ana[df_cl_ana['PERIOD'] == 'Before']['EXECUTION_TIME']
+        after = df_cl_ana[df_cl_ana['PERIOD'] == 'After']['EXECUTION_TIME']
+
+        mean_before = before.mean()
+        mean_after = after.mean()
+
+        # Perform the independent samples t-test
+        t_stat, p_value = stats.ttest_ind(before, after)
+
+        # Significance level
+        alpha = 0.05
+
+        # Interpret the results
+        if p_value < alpha:
+            result = 'Reject the null hypothesis: The means are significantly different.'
+        else:
+            result = 'Do not reject the null hypothesis: There is not enough evidence to say the means are significantly different.'
+
+        # Report results
+        st.write(f'Mean before: {mean_before:.4f} minutes')
+        st.write(f'Mean after: {mean_after:.4f} minutes')
+        st.write(f'T-statistic: {t_stat:.4f}')
+        st.write(f'P-value: {p_value:.4f}')
+        st.write(result)

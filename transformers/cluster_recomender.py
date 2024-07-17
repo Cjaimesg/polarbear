@@ -65,7 +65,7 @@ class cluster_recomender(base.BaseTransformer):
             .when(F.col("TYPE") == 'FloatType', F.lit(F.concat(F.lit("TRUNCATE("), F.col("COL"), F.lit(', '), F.lit(-F.col('ORDER') + 4), F.lit(")")))) \
             .when(F.col("TYPE") == 'DecimalType', F.lit(F.concat(F.lit("TRUNCATE("), F.col("COL"), F.lit(', '), F.lit(-F.col('ORDER') + 4), F.lit(")")))) \
             .when(F.col("TYPE") == 'BooleanType', F.col("COL")) \
-            .when(F.col("TYPE") == 'Timestamp', F.lit(F.concat(F.lit("DATE("), F.col("COL"), F.lit(")")))) \
+            .when(F.col("TYPE") == 'TimestampType', F.lit(F.concat(F.lit("DATE("), F.col("COL"), F.lit(")")))) \
             .when(F.col("TYPE") == 'DateType', F.lit(F.concat(F.lit("DATE("), F.col("COL"), F.lit(")")))) \
             .otherwise(F.lit(" -- Case Not Implemented")))
 
@@ -170,8 +170,8 @@ class cluster_recomender(base.BaseTransformer):
 
         return col_info
 
-    def _fit(self, dataset: snowpark.DataFrame) -> "clsuter_recomender":
+    def _fit(self, dataset: snowpark.DataFrame) -> "cluster_recomender":
         return self
 
-    def fit(self, dataset: snowpark.DataFrame) -> "clsuter_recomender":
+    def fit(self, dataset: snowpark.DataFrame) -> "cluster_recomender":
         return self

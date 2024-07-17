@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant Pipeline
+    participant Tranformer
+    Pipeline->>Tranformer: QUERY_HISTORY
+    Note over Tranformer: preprocessor
+    Tranformer->>Pipeline: 
+    Pipeline->>Tranformer: 
+    Note over Tranformer: execution_time_history
+    Tranformer->>Pipeline: 
