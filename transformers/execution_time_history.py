@@ -25,6 +25,8 @@ class execution_time_history(base.BaseTransformer):
         dataset = dataset.with_column('PERIOD',
                                       F.when(F.col('START_TIME') < self.date_split, F.lit('After'))
                                       .otherwise('Before'))
+        
+        dataset = dataset.order_by(F.col('START_TIME').asc())
 
         return dataset
 

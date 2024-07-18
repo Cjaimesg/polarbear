@@ -9,12 +9,13 @@ def imput_query_parametrized_hash():
 
 def select_date():
     """
-    Prompts the user to select a date using Streamlit's date_input widget.
+    Prompts the user to select a date and time using Streamlit's date_input and time_input widgets.
 
-    The default date presented to the user is five days before tomorrow's date.
+    The default date presented to the user is five days before tomorrow's date,
+    and the default time is the current time.
 
     Returns:
-        datetime.date: The date selected by the user.
+        datetime.datetime: The datetime selected by the user.
     """
     # Calculate tomorrow's date
     today = datetime.now() + timedelta(days=1)
@@ -23,9 +24,15 @@ def select_date():
     date_default = today - timedelta(days=5)
 
     # Prompt the user to select a date, with the default date set
-    date_selected = st.date_input("When do you apply clustering?", date_default)
+    date_selected = st.date_input("Select a date for clustering:", date_default)
 
-    return date_selected
+    # Prompt the user to select a time, with the default time set to the current time
+    time_selected = st.time_input("Select a time for clustering:", today.time())
+
+    # Combine the selected date and time into a datetime object
+    datetime_selected = datetime.combine(date_selected, time_selected)
+
+    return datetime_selected
 
 
 def select_date_range():
