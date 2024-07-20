@@ -27,7 +27,7 @@ def select_date():
     date_selected = st.date_input("Select a date for clustering:", date_default)
 
     # Prompt the user to select a time, with the default time set to the current time
-    time_selected = st.time_input("Select a time for clustering:", today.time())
+    time_selected = st.time_input("Select a time for clustering:")
 
     # Combine the selected date and time into a datetime object
     datetime_selected = datetime.combine(date_selected, time_selected)

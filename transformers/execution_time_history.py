@@ -23,9 +23,9 @@ class execution_time_history(base.BaseTransformer):
             .filter(F.col('QUERY_PARAMETERIZED_HASH') == self.qp_hash)
 
         dataset = dataset.with_column('PERIOD',
-                                      F.when(F.col('START_TIME') < self.date_split, F.lit('After'))
+                                      F.when(F.col('START_TIME') > self.date_split, F.lit('After'))
                                       .otherwise('Before'))
-        
+
         dataset = dataset.order_by(F.col('START_TIME').asc())
 
         return dataset

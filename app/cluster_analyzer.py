@@ -75,10 +75,12 @@ class cluster_analyzer():
         st.plotly_chart(fig)
 
     def execution_time_history(self, df_cl_ana: pd.DataFrame):
-        # Create the line plot
+        # Ordenar el DataFrame por START_TIME de forma ascendente
+        df_cl_ana = df_cl_ana.sort_values(by="START_TIME")
 
+        # Crear el gráfico de líneas
         fig = px.line(df_cl_ana, x="START_TIME", y="EXECUTION_TIME",
-                      title='Evolution of query execution time before and after optimization', 
+                      title='Evolution of query execution time before and after optimization',
                       labels={'START_TIME': 'Date of Execution', 'EXECUTION_TIME': 'Execution Time (s)'})
 
         fig.update_layout(showlegend=False)
@@ -108,8 +110,6 @@ class cluster_analyzer():
             result = 'Do not reject the null hypothesis: There is not enough evidence to say the means are significantly different.'
 
         # Report results
-        st.write(f'Mean before: {mean_before:.4f} minutes')
-        st.write(f'Mean after: {mean_after:.4f} minutes')
         st.write(f'T-statistic: {t_stat:.4f}')
         st.write(f'P-value: {p_value:.4f}')
         st.write(result)
