@@ -50,5 +50,6 @@ Before you begin, ensure you have the following installed and updated:
    Make sure to replace the values in quotes with your actual credentials.
 
 ## Usage
-
-[Add instructions on how to use the project once it's installed and configured]
+   ```
+   streamlit run cluster_recomendation.py
+   ```
